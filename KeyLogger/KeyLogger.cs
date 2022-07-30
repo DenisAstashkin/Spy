@@ -1,11 +1,8 @@
 using System;
-using System.Windows.Input;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
-namespace keylogger
+namespace KeyLogger
 {
-    public class KeyLogger
+    public class Class1
     {
     }
 }
