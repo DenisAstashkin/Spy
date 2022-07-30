@@ -14,6 +14,16 @@
         "frameworkReferences": [
           "Microsoft.WindowsDesktop.App.WPF"
         ]
+      },
+      "SpyProcess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/SpyProcess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SpyProcess.dll": {}
+        }
       }
     }
   },
@@ -22,11 +32,17 @@
       "type": "project",
       "path": "../KeyLogger/KeyLogger.csproj",
       "msbuildProject": "../KeyLogger/KeyLogger.csproj"
+    },
+    "SpyProcess/1.0.0": {
+      "type": "project",
+      "path": "../SpyProcess/SpyProcess.csproj",
+      "msbuildProject": "../SpyProcess/SpyProcess.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
-      "KeyLogger >= 1.0.0"
+      "KeyLogger >= 1.0.0",
+      "SpyProcess >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -63,6 +79,9 @@
           "projectReferences": {
             "E:\\C#\\UserSpy\\KeyLogger\\KeyLogger.csproj": {
               "projectPath": "E:\\C#\\UserSpy\\KeyLogger\\KeyLogger.csproj"
+            },
+            "E:\\C#\\UserSpy\\SpyProcess\\SpyProcess.csproj": {
+              "projectPath": "E:\\C#\\UserSpy\\SpyProcess\\SpyProcess.csproj"
             }
           }
         }
