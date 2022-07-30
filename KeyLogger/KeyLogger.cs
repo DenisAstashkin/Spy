@@ -21,7 +21,7 @@ namespace keylogger
             start = false;
         }
 
-        public void Logger(Action<Key> ShowKeys)
+        public void Logger(Action<Key> LogKeys)
         {
             Task.Run(() =>
             {
@@ -34,7 +34,7 @@ namespace keylogger
                         {
                             if (Keyboard.IsKeyDown(item.Key) && item.Value == true)
                             {
-                                ShowKeys(item.Key);
+                                LogKeys(item.Key);
                                 keys[item.Key] = false;
                             }
                             if (Keyboard.IsKeyUp(item.Key))
