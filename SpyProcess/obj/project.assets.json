@@ -1,33 +1,11 @@
 {
   "version": 3,
   "targets": {
-    "net6.0-windows7.0": {
-      "KeyLogger/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/KeyLogger.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/KeyLogger.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.WindowsDesktop.App.WPF"
-        ]
-      }
-    }
+    "net6.0": {}
   },
-  "libraries": {
-    "KeyLogger/1.0.0": {
-      "type": "project",
-      "path": "../KeyLogger/KeyLogger.csproj",
-      "msbuildProject": "../KeyLogger/KeyLogger.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    "net6.0-windows7.0": [
-      "KeyLogger >= 1.0.0"
-    ]
+    "net6.0": []
   },
   "packageFolders": {
     "C:\\Users\\Хозяин\\.nuget\\packages\\": {},
@@ -36,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\C#\\UserSpy\\UserSpy\\UserSpy.csproj",
-      "projectName": "UserSpy",
-      "projectPath": "E:\\C#\\UserSpy\\UserSpy\\UserSpy.csproj",
+      "projectUniqueName": "E:\\C#\\UserSpy\\SpyProcess\\SpyProcess.csproj",
+      "projectName": "SpyProcess",
+      "projectPath": "E:\\C#\\UserSpy\\SpyProcess\\SpyProcess.csproj",
       "packagesPath": "C:\\Users\\Хозяин\\.nuget\\packages\\",
-      "outputPath": "E:\\C#\\UserSpy\\UserSpy\\obj\\",
+      "outputPath": "E:\\C#\\UserSpy\\SpyProcess\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -51,20 +29,16 @@
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net6.0-windows7.0"
+        "net6.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net6.0-windows7.0": {
-          "targetAlias": "net6.0-windows",
-          "projectReferences": {
-            "E:\\C#\\UserSpy\\KeyLogger\\KeyLogger.csproj": {
-              "projectPath": "E:\\C#\\UserSpy\\KeyLogger\\KeyLogger.csproj"
-            }
-          }
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -74,8 +48,8 @@
       }
     },
     "frameworks": {
-      "net6.0-windows7.0": {
-        "targetAlias": "net6.0-windows",
+      "net6.0": {
+        "targetAlias": "net6.0",
         "imports": [
           "net461",
           "net462",
@@ -89,9 +63,6 @@
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
-          },
-          "Microsoft.WindowsDesktop.App.WPF": {
-            "privateAssets": "none"
           }
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
