@@ -4,6 +4,8 @@ namespace spyprocess
 {
     public class SpyProcess
     {
+        public SpyProcess(){  }
+
         public void KillsProcess(string ProcessName)
         {
             foreach (var process in Process.GetProcesses())
