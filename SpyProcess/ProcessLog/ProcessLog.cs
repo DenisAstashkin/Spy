@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using spyprocess.processmodel;
-using System.IO;
 
 namespace spyprocess.processlog
 {
-    public class ProcessLog
+    public static class ProcessLog
     {
-        public ProcessLog() { }
-
-        public async Task<bool> AsyncSaveProcessInfo(string path, ProcessModel process)
+        public static async Task<bool> AsyncSaveProcessInfo(string path, ProcessModel process)
         {
             return await Task<bool>.Run(() =>
             {
