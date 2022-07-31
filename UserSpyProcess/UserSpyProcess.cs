@@ -1,9 +1,13 @@
 ﻿using System.Diagnostics;
 
-namespace UserSpyProcess
+namespace userspyprocess
 {
     public static class UserSpyProcess
     {
+        public static string? GetFullPath()
+        {
+            return Process.GetCurrentProcess()?.MainModule?.FileName;
+        }
         public static bool ShowWindow(string path, bool show)
         {            
             try
