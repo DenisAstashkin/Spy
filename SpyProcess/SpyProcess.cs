@@ -6,6 +6,18 @@ namespace spyprocess
     {
         public SpyProcess(){  }
 
+        public (string? Name, DateTime? StartTime) GetProcess(string ProcessName)
+        {
+            foreach (var process in Process.GetProcesses())
+            {
+                if(process.ProcessName == ProcessName)
+                {
+                    return (process.ProcessName, process.StartTime);
+                }
+            }
+            return (null, null);
+        }
+
         public void KillsProcess(string ProcessName)
         {
             foreach (var process in Process.GetProcesses())
@@ -17,7 +29,7 @@ namespace spyprocess
             }
         }
 
-        public IEnumerable<(string Name, DateTime StartTime)> GetProcessInfo()
+        public IEnumerable<(string Name, DateTime StartTime)> GetAllProcess()
         {
             foreach (var process in Process.GetProcesses())
             {
