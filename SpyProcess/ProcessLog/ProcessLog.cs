@@ -5,7 +5,7 @@ namespace spyprocess.processlog
 {
     public static class ProcessLog
     {
-        public static async Task<bool> AsyncSaveProcessInfo(string path, ProcessModel process)
+        public static async Task<bool> AsyncSaveProcess(string path, ProcessModel process, Action<StreamWriter> SaveProcess)
         {
             return await Task<bool>.Run(() =>
             {
@@ -13,7 +13,7 @@ namespace spyprocess.processlog
                 {
                     using (var sw = new StreamWriter(path, false, Encoding.UTF8))
                     {
-                        sw.WriteLine($"[TIME] {process.StartProcess}    -   [PROCESS] {process.ProcessName}");
+                        SaveProcess(sw);
                     }
                     return true;
                 }
