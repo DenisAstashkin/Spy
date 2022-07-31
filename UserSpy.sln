@@ -5,6 +5,15 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserSpy", "UserSpy\UserSpy.csproj", "{2014D197-840D-4626-B5F7-1E779D36717F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyLogger", "KeyLogger\KeyLogger.csproj", "{7905C5E0-FD60-4937-8C92-2FF4BD6B4E6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyProcess", "SpyProcess\SpyProcess.csproj", "{CB9FE81C-CF09-4A4E-8C46-CAB7705B2A11}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{E3A48AA1-0073-415E-BFFF-00515C5F3A0D}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +24,14 @@ Global
 		{2014D197-840D-4626-B5F7-1E779D36717F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2014D197-840D-4626-B5F7-1E779D36717F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2014D197-840D-4626-B5F7-1E779D36717F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7905C5E0-FD60-4937-8C92-2FF4BD6B4E6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7905C5E0-FD60-4937-8C92-2FF4BD6B4E6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7905C5E0-FD60-4937-8C92-2FF4BD6B4E6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7905C5E0-FD60-4937-8C92-2FF4BD6B4E6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB9FE81C-CF09-4A4E-8C46-CAB7705B2A11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB9FE81C-CF09-4A4E-8C46-CAB7705B2A11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB9FE81C-CF09-4A4E-8C46-CAB7705B2A11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB9FE81C-CF09-4A4E-8C46-CAB7705B2A11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

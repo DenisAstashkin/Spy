@@ -7,4 +7,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\KeyLogger\KeyLogger.csproj" />
+    <ProjectReference Include="..\SpyProcess\SpyProcess.csproj" />
+  </ItemGroup>
+
 </Project>
