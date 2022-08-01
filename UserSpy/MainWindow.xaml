@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:UserSpy"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+    <StackPanel>
+        <TextBox x:Name="text" Height="200" Width="600"/>
+        <Button Click="Button_Click" Height="20"/>
+    </StackPanel>
 </Window>

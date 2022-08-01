@@ -4,7 +4,7 @@ namespace spyprocess
 {
     public class SpyProcess
     {
-        (string, object?) _process;
+        private (string, object?) _process;
 
         public SpyProcess()
         {
@@ -15,19 +15,19 @@ namespace spyprocess
         {
             foreach (var process in Process.GetProcesses())
             {
-                if(process.ProcessName == ProcessName)
+                if (process.ProcessName == ProcessName)
                 {
                     try
                     {
                         return (process.ProcessName, process.StartTime);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         return (process.ProcessName, "Нет доступа");
                     }
                 }
             }
-            return (string.Empty, null);
+            return (string.Empty, null);            
         }
 
         public void KillsProcess(string ProcessName)

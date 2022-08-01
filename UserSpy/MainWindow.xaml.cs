@@ -18,8 +18,6 @@ using spyprocess;
 using spyprocess.processlog;
 using spyprocess.processmodel;
 using userspyprocess;
-using System.IO;
-using System.Diagnostics;
 
 namespace UserSpy
 {    
@@ -32,9 +30,16 @@ namespace UserSpy
         {
             logger = new KeyLogger();
             SP = new SpyProcess();
-            InitializeComponent();
-            MessageBox.Show($"{UserSpyProcess.GetFullPath()}");
+            InitializeComponent();   
             
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in SP.GetAllProcess())
+            {
+                text.Text += $"[PROCESS] {item.Name}    -   [TIME] {item.TimeStart}\n";
+            }
         }
     }
 }
