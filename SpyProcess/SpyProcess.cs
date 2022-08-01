@@ -31,7 +31,7 @@ namespace spyprocess
             return new ProcessModel(string.Empty, null);            
         }
 
-        public void KillsProcess(string ProcessName)
+        public void KillProcess(string ProcessName)
         {
             Task.Run(() =>
             {
