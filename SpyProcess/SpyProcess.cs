@@ -4,18 +4,30 @@ namespace spyprocess
 {
     public class SpyProcess
     {
-        public SpyProcess(){  }
+        (string, object?) _process;
 
-        public (string? Name, DateTime? StartTime) GetProcess(string ProcessName)
+        public SpyProcess()
+        {
+            _process = (string.Empty, null);
+        }
+
+        public (string Name, object? TimeStart) GetProcess(string ProcessName)
         {
             foreach (var process in Process.GetProcesses())
             {
                 if(process.ProcessName == ProcessName)
                 {
-                    return (process.ProcessName, process.StartTime);
+                    try
+                    {
+                        return (process.ProcessName, process.StartTime);
+                    }
+                    catch(Exception e)
+                    {
+                        return (process.ProcessName, "Нет доступа");
+                    }
                 }
             }
-            return (null, null);
+            return (string.Empty, null);
         }
 
         public void KillsProcess(string ProcessName)
@@ -29,11 +41,19 @@ namespace spyprocess
             }
         }
 
-        public IEnumerable<(string Name, DateTime StartTime)> GetAllProcess()
+        public IEnumerable<(string Name, object? TimeStart)> GetAllProcess()
         {
             foreach (var process in Process.GetProcesses())
-            {
-                yield return (process.ProcessName, process.StartTime);
+            {                
+                try
+                {
+                    _process = (process.ProcessName, process.StartTime);
+                }
+                catch
+                {
+                    _process = (process.ProcessName, "Нет доступа");
+                }
+                yield return _process;
             }
         }        
     }
