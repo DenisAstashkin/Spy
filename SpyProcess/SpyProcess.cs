@@ -1,17 +1,18 @@
 ﻿using System.Diagnostics;
+using spyprocess.processmodel;
 
 namespace spyprocess
 {
     public class SpyProcess
     {
-        private (string, object?) _process;
+        private ProcessModel _process;
 
         public SpyProcess()
         {
-            _process = (string.Empty, null);
+            _process = new ProcessModel();
         }
 
-        public (string Name, object? TimeStart) GetProcess(string ProcessName)
+        public ProcessModel GetProcess(string ProcessName)
         {
             foreach (var process in Process.GetProcesses())
             {
@@ -19,39 +20,42 @@ namespace spyprocess
                 {
                     try
                     {
-                        return (process.ProcessName, process.StartTime);
+                        return new ProcessModel(process.ProcessName, process.StartTime);
                     }
                     catch (Exception e)
                     {
-                        return (process.ProcessName, "Нет доступа");
+                        return new ProcessModel(process.ProcessName, "Нет доступа");
                     }
                 }
             }
-            return (string.Empty, null);            
+            return new ProcessModel(string.Empty, null);            
         }
 
         public void KillsProcess(string ProcessName)
         {
-            foreach (var process in Process.GetProcesses())
+            Task.Run(() =>
             {
-                if(process.ProcessName == ProcessName)
+                foreach (var process in Process.GetProcesses())
                 {
-                    process.Kill();
+                    if (process.ProcessName == ProcessName)
+                    {
+                        process.Kill();
+                    }
                 }
-            }
+            });
         }
 
-        public IEnumerable<(string Name, object? TimeStart)> GetAllProcess()
+        public IEnumerable<ProcessModel> GetAllProcess()
         {
             foreach (var process in Process.GetProcesses())
             {                
                 try
                 {
-                    _process = (process.ProcessName, process.StartTime);
+                    _process = new ProcessModel(process.ProcessName, process.StartTime);
                 }
                 catch
                 {
-                    _process = (process.ProcessName, "Нет доступа");
+                    _process = new ProcessModel(process.ProcessName, "Нет доступа");
                 }
                 yield return _process;
             }
