@@ -9,8 +9,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KeyLogger\KeyLogger.csproj" />
+    <ProjectReference Include="..\SpyMainWindow\SpyMainWindow.csproj" />
     <ProjectReference Include="..\SpyProcess\SpyProcess.csproj" />
-    <ProjectReference Include="..\UserSpyProcess\UserSpyProcess.csproj" />
   </ItemGroup>
 
 </Project>

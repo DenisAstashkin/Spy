@@ -15,6 +15,19 @@
           "Microsoft.WindowsDesktop.App.WPF"
         ]
       },
+      "SpyMainWindow/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/SpyMainWindow.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SpyMainWindow.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
+      },
       "SpyProcess/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -23,16 +36,6 @@
         },
         "runtime": {
           "bin/placeholder/SpyProcess.dll": {}
-        }
-      },
-      "UserSpyProcess/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/UserSpyProcess.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/UserSpyProcess.dll": {}
         }
       }
     }
@@ -43,22 +46,22 @@
       "path": "../KeyLogger/KeyLogger.csproj",
       "msbuildProject": "../KeyLogger/KeyLogger.csproj"
     },
+    "SpyMainWindow/1.0.0": {
+      "type": "project",
+      "path": "../SpyMainWindow/SpyMainWindow.csproj",
+      "msbuildProject": "../SpyMainWindow/SpyMainWindow.csproj"
+    },
     "SpyProcess/1.0.0": {
       "type": "project",
       "path": "../SpyProcess/SpyProcess.csproj",
       "msbuildProject": "../SpyProcess/SpyProcess.csproj"
-    },
-    "UserSpyProcess/1.0.0": {
-      "type": "project",
-      "path": "../UserSpyProcess/UserSpyProcess.csproj",
-      "msbuildProject": "../UserSpyProcess/UserSpyProcess.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
       "KeyLogger >= 1.0.0",
-      "SpyProcess >= 1.0.0",
-      "UserSpyProcess >= 1.0.0"
+      "SpyMainWindow >= 1.0.0",
+      "SpyProcess >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -96,11 +99,11 @@
             "E:\\C#\\UserSpy\\KeyLogger\\KeyLogger.csproj": {
               "projectPath": "E:\\C#\\UserSpy\\KeyLogger\\KeyLogger.csproj"
             },
+            "E:\\C#\\UserSpy\\SpyMainWindow\\SpyMainWindow.csproj": {
+              "projectPath": "E:\\C#\\UserSpy\\SpyMainWindow\\SpyMainWindow.csproj"
+            },
             "E:\\C#\\UserSpy\\SpyProcess\\SpyProcess.csproj": {
               "projectPath": "E:\\C#\\UserSpy\\SpyProcess\\SpyProcess.csproj"
-            },
-            "E:\\C#\\UserSpy\\UserSpyProcess\\UserSpyProcess.csproj": {
-              "projectPath": "E:\\C#\\UserSpy\\UserSpyProcess\\UserSpyProcess.csproj"
             }
           }
         }
