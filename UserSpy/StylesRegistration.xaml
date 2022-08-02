@@ -1,4 +1,19 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+
+    <Style x:Key="RadButton" TargetType="RadioButton">
+        <Setter Property="FontSize" Value="15"/>
+    </Style>
+
+    <Style x:Key="TxtBlock" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Margin" Value="10 10 10 0"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="Btn" TargetType="Button">
+        <Setter Property="Margin" Value="40"/>
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+
 </ResourceDictionary>

@@ -24,10 +24,16 @@ using System.Threading;
 namespace UserSpy
 {    
     public partial class Registration : Window
-    {        
+    {             
         public Registration()
         {            
-            InitializeComponent();              
+            InitializeComponent();                         
+        }
+
+        private void Reg(object sender, RoutedEventArgs e)
+        {
+            new Window1().Show();
+            this.Close();
         }
     }
 }

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 E:\C#\UserSpy\UserSpy\App.xaml
-2386085688
+3-1827408285
 
 61727677778
 1971688428739
-MainApp\MainApp.xaml;Registration.xaml;
+MainApp\MainApp.xaml;Registration.xaml;StylesRegistration.xaml;
 
-True
+False
 
