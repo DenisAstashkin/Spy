@@ -23,17 +23,11 @@ using System.Threading;
 
 namespace UserSpy
 {    
-    public partial class MainWindow : Window
-    {
-        KeyLogger logger;
-        SpyProcess SP;
-        
-        public MainWindow()
-        {
-            logger = new KeyLogger();
-            SP = new SpyProcess();
-            InitializeComponent();   
-            
+    public partial class Registration : Window
+    {        
+        public Registration()
+        {            
+            InitializeComponent();              
         }
     }
 }
