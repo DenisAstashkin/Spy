@@ -18,16 +18,18 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-               
-        <StackPanel Grid.Row="0">
-            <RadioButton GroupName="Modes" Content="Режим №1" Style="{StaticResource RadButton}"/>
-            <TextBlock Style="{StaticResource TxtBlock}">
+
+        <StackPanel x:Name="SPMode1" Grid.Row="0">
+            <RadioButton GroupName="Modes" Content="Режим №1" Style="{StaticResource RadButton}"
+                         Checked="RadioButton_Checked" Unchecked="RadioButton_Unchecked"/>
+            <TextBlock x:Name="Mode1" Style="{StaticResource TxtBlock}">
                 Первый режим позволяет пользователю настроить опции для слежения.
             </TextBlock>
         </StackPanel>
-        <StackPanel Grid.Row="1">
-            <RadioButton GroupName="Modes" Content="Режим №2" Style="{StaticResource RadButton}"/>
-            <TextBlock Style="{StaticResource TxtBlock}">
+        <StackPanel x:Name="SPMode2" Grid.Row="1">
+            <RadioButton GroupName="Modes" Content="Режим №2" Style="{StaticResource RadButton}"
+                         Checked="RadioButton_Checked" Unchecked="RadioButton_Unchecked"/>
+            <TextBlock x:Name="Mode2" Style="{StaticResource TxtBlock}">
                 Второй режим приложения незаметно для текущего пользователя выполняет
                 процесс слежения (статистика и модерирование).
             </TextBlock>
