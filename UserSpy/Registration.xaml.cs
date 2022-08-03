@@ -28,38 +28,38 @@ namespace UserSpy
         private List<CheckBox> SP1 = new List<CheckBox>
         {
             new CheckBox
-                    {
-                        Name = "Mode1Check1",
+                    {                        
                         Content = "Следить за нажатиями",
-                        Margin = new Thickness(10, 0, 0, 0)
+                        Margin = new Thickness(10, 0, 0, 0),
+                        FontSize = 15
                     },
             new CheckBox
-                    {
-                        Name = "Mode1Check2",
+                    {                        
                         Content = "Следить за процессами",
-                        Margin = new Thickness(10, 0, 0, 0)
+                        Margin = new Thickness(10, 0, 0, 0),
+                        FontSize = 15
                     },
             new CheckBox
-                    {
-                        Name = "Mode1Check3",
+                    {                        
                         Content = "Закрывать ненужные процессы",
-                        Margin = new Thickness(10, 0, 0, 0)
+                        Margin = new Thickness(10, 0, 0, 0),
+                        FontSize = 15
                     }
 
         };
         private List<CheckBox> SP2 = new List<CheckBox>
         {
             new CheckBox
-                    {
-                        Name = "Mode2Check1",
+                    {                        
                         Content = "Статика",
-                        Margin = new Thickness(10, 0, 0, 0)
+                        Margin = new Thickness(10, 0, 0, 0),
+                        FontSize = 15
                     },
             new CheckBox
-                    {
-                        Name = "Check2",
+                    {                        
                         Content = "Модерация",
-                        Margin = new Thickness(10, 0, 0, 0)
+                        Margin = new Thickness(10, 0, 0, 0),
+                        FontSize = 15
                     }
         };
         private TextBlock TB = new TextBlock();
@@ -72,7 +72,11 @@ namespace UserSpy
 
         private void Reg(object sender, RoutedEventArgs e)
         {
-           
+            new MainApp
+            {
+                RegistrationWindow = this
+            }.Show();
+            Close();            
         }
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)

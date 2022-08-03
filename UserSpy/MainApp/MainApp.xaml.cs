@@ -13,15 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace UserSpy
-{
-    /// <summary>
-    /// Логика взаимодействия для MainApp.xaml
-    /// </summary>
+{    
     public partial class MainApp : Window
     {
+        public Registration RegistrationWindow { get; set; }
         public MainApp()
         {
             InitializeComponent();
+            
         }
     }
 }
