@@ -22,30 +22,29 @@ using System.Diagnostics;
 using System.Threading;
 
 namespace UserSpy
-{    
+{
     public partial class Registration : Window
     {
         private List<CheckBox> SP1 = new List<CheckBox>
         {
             new CheckBox
-                    {                        
+                    {
                         Content = "Следить за нажатиями",
                         Margin = new Thickness(10, 0, 0, 0),
                         FontSize = 15
                     },
             new CheckBox
-                    {                        
+                    {
                         Content = "Следить за процессами",
                         Margin = new Thickness(10, 0, 0, 0),
                         FontSize = 15
                     },
             new CheckBox
-                    {                        
+                    {
                         Content = "Закрывать ненужные процессы",
                         Margin = new Thickness(10, 0, 0, 0),
                         FontSize = 15
                     }
-
         };
         private List<CheckBox> SP2 = new List<CheckBox>
         {
@@ -56,14 +55,36 @@ namespace UserSpy
                         FontSize = 15
                     },
             new CheckBox
-                    {                        
+                    {
                         Content = "Модерация",
                         Margin = new Thickness(10, 0, 0, 0),
                         FontSize = 15
                     }
         };
+        private List<CheckBox> SP3 = new List<CheckBox>
+        {
+            new CheckBox
+                    {
+                        Content = "Отчёт об нажатых клавишах",
+                        Margin = new Thickness(10, 0, 0, 0),
+                        FontSize = 15
+                    },
+            new CheckBox
+                    {
+                        Content = "Отчёт о всех запущенных процессах",
+                        Margin = new Thickness(10, 0, 0, 0),
+                        FontSize = 15
+                    },
+            new CheckBox
+                    {
+                        Content = "Отчёт о работе прохих процессах",
+                        Margin = new Thickness(10, 0, 0, 0),
+                        FontSize = 15
+                    },
+        };
         private TextBlock TB = new TextBlock();
         private char IndexCheck;
+
 
         public Registration()
         {            
@@ -100,7 +121,15 @@ namespace UserSpy
                     {
                         SPMode2.Children.Add(checkbox);
                     }
-                    break;                                   
+                    break;
+                case '3':
+                    TB = SPMode3.Children[1] as TextBlock;
+                    SPMode3.Children.RemoveAt(1);
+                    foreach(var checkbox in SP3)
+                    {
+                        SPMode3.Children.Add(checkbox);
+                    }
+                    break;
             }
         }
 
@@ -117,6 +146,10 @@ namespace UserSpy
                 case '2':
                     SPMode2.Children.RemoveRange(1, 2);
                     SPMode2.Children.Add(TB);
+                    break;
+                case '3':
+                    SPMode3.Children.RemoveRange(1, 3);
+                    SPMode3.Children.Add(TB);
                     break;
             }
         }

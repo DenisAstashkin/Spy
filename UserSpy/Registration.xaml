@@ -34,8 +34,9 @@
                 процесс слежения (статистика и модерирование).
             </TextBlock>
         </StackPanel>
-        <StackPanel Grid.Row="2">
-            <RadioButton GroupName="Modes" Content="Режим №3" Style="{StaticResource RadButton}"/>
+        <StackPanel x:Name="SPMode3" Grid.Row="2">
+            <RadioButton GroupName="Modes" Content="Режим №3" Style="{StaticResource RadButton}"
+                         Checked="RadioButton_Checked" Unchecked="RadioButton_Unchecked"/>
             <TextBlock Style="{StaticResource TxtBlock}">
                  Третий режим позволяет посмотреть отчет о работе программы.
             </TextBlock>
