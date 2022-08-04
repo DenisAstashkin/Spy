@@ -5,8 +5,7 @@ using System.Collections.Generic;
 namespace UserSpy
 {
     public partial class Registration : Window
-    {
-        
+    {        
         public readonly List<CheckBox> SP1 = new List<CheckBox>
         {
             new CheckBox
@@ -57,8 +56,7 @@ namespace UserSpy
             Style res = (Style)this.Resources["CheckBx"];
             InitStyles(SP1, res);
             InitStyles(SP2, res);
-            InitStyles(SP3, res);       
-            
+            InitStyles(SP3, res);                 
         }
 
         private void Reg(object sender, RoutedEventArgs e)
@@ -126,9 +124,9 @@ namespace UserSpy
 
         private void InitStyles(List<CheckBox> controls, Style style)
         {
-            foreach (var item in controls)
+            foreach (var control in controls)
             {
-                item.Style = style;
+                control.Style = style;
             }
         }
     }
