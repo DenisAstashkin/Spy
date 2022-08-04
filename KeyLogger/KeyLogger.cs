@@ -31,7 +31,6 @@ namespace keylogger
             {
                 if (Start)
                     return;
-
                 Start = true;
                 try
                 {
