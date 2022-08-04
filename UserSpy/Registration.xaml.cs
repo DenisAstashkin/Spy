@@ -25,7 +25,7 @@ namespace UserSpy
 {
     public partial class Registration : Window
     {
-        private List<CheckBox> SP1 = new List<CheckBox>
+        public readonly List<CheckBox> SP1 = new List<CheckBox>
         {
             new CheckBox
                     {
@@ -46,7 +46,7 @@ namespace UserSpy
                         FontSize = 15
                     }
         };
-        private List<CheckBox> SP2 = new List<CheckBox>
+        public readonly List<CheckBox> SP2 = new List<CheckBox>
         {
             new CheckBox
                     {                        
@@ -61,7 +61,7 @@ namespace UserSpy
                         FontSize = 15
                     }
         };
-        private List<CheckBox> SP3 = new List<CheckBox>
+        public readonly List<CheckBox> SP3 = new List<CheckBox>
         {
             new CheckBox
                     {
@@ -77,15 +77,14 @@ namespace UserSpy
                     },
             new CheckBox
                     {
-                        Content = "Отчёт о работе прохих процессах",
+                        Content = "Отчёт о работе плохих процессах",
                         Margin = new Thickness(10, 0, 0, 0),
                         FontSize = 15
                     },
         };
         private TextBlock TB = new TextBlock();
-        private char IndexCheck;
-
-
+        public char IndexCheck { get; private set; }
+        
         public Registration()
         {            
             InitializeComponent();                         
