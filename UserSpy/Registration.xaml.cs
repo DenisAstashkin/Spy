@@ -7,15 +7,17 @@ namespace UserSpy
     public partial class Registration : Window
     {        
         public readonly List<CheckBox> SP1 = new List<CheckBox>
-        {
+        {        
             new CheckBox
                     {
-                        Content = "Следить за нажатиями",                        
-                    },
+                        Content = "Следить за нажатиями",
+                    },   
+
             new CheckBox
                     {
                         Content = "Следить за процессами",                        
                     },
+            
             new CheckBox
                     {
                         Content = "Закрывать ненужные процессы",                        
