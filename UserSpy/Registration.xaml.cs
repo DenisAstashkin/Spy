@@ -1,93 +1,64 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using keylogger;
-using keylogger.keylog;
-using spyprocess;
-using spyprocess.processlog;
-using spyprocess.processmodel;
-using spymainwindow;
-using System.Diagnostics;
-using System.Threading;
+using System.Collections.Generic;
 
 namespace UserSpy
 {
     public partial class Registration : Window
     {
+        
         public readonly List<CheckBox> SP1 = new List<CheckBox>
         {
             new CheckBox
                     {
-                        Content = "Следить за нажатиями",
-                        Margin = new Thickness(10, 0, 0, 0),
-                        FontSize = 15
+                        Content = "Следить за нажатиями",                        
                     },
             new CheckBox
                     {
-                        Content = "Следить за процессами",
-                        Margin = new Thickness(10, 0, 0, 0),
-                        FontSize = 15
+                        Content = "Следить за процессами",                        
                     },
             new CheckBox
                     {
-                        Content = "Закрывать ненужные процессы",
-                        Margin = new Thickness(10, 0, 0, 0),
-                        FontSize = 15
+                        Content = "Закрывать ненужные процессы",                        
                     }
         };
         public readonly List<CheckBox> SP2 = new List<CheckBox>
         {
             new CheckBox
                     {                        
-                        Content = "Статика",
-                        Margin = new Thickness(10, 0, 0, 0),
-                        FontSize = 15
+                        Content = "Статика",                        
                     },
             new CheckBox
                     {
-                        Content = "Модерация",
-                        Margin = new Thickness(10, 0, 0, 0),
-                        FontSize = 15
+                        Content = "Модерация",                       
                     }
         };
         public readonly List<CheckBox> SP3 = new List<CheckBox>
         {
             new CheckBox
                     {
-                        Content = "Отчёт об нажатых клавишах",
-                        Margin = new Thickness(10, 0, 0, 0),
-                        FontSize = 15
+                        Content = "Отчёт об нажатых клавишах",                        
                     },
             new CheckBox
                     {
-                        Content = "Отчёт о всех запущенных процессах",
-                        Margin = new Thickness(10, 0, 0, 0),
-                        FontSize = 15
+                        Content = "Отчёт о всех запущенных процессах",                        
                     },
             new CheckBox
                     {
-                        Content = "Отчёт о работе плохих процессах",
-                        Margin = new Thickness(10, 0, 0, 0),
-                        FontSize = 15
+                        Content = "Отчёт о работе плохих процессах",                        
                     },
         };
-        private TextBlock TB = new TextBlock();
+        private TextBlock? TB = new TextBlock();
         public char IndexCheck { get; private set; }
         
         public Registration()
         {            
-            InitializeComponent();                         
+            InitializeComponent();
+            Style res = (Style)this.Resources["CheckBx"];
+            InitStyles(SP1, res);
+            InitStyles(SP2, res);
+            InitStyles(SP3, res);       
+            
         }
 
         private void Reg(object sender, RoutedEventArgs e)
@@ -107,10 +78,10 @@ namespace UserSpy
             {
                 case '1':
                     TB = SPMode1.Children[1] as TextBlock;
-                    SPMode1.Children.RemoveAt(1);
+                    SPMode1?.Children.RemoveAt(1);
                     foreach (var checkbox in SP1)
                     {
-                        SPMode1.Children.Add(checkbox);
+                        SPMode1?.Children.Add(checkbox);
                     }
                     break;
                 case '2':
@@ -150,6 +121,14 @@ namespace UserSpy
                     SPMode3.Children.RemoveRange(1, 3);
                     SPMode3.Children.Add(TB);
                     break;
+            }
+        }
+
+        private void InitStyles(List<CheckBox> controls, Style style)
+        {
+            foreach (var item in controls)
+            {
+                item.Style = style;
             }
         }
     }
