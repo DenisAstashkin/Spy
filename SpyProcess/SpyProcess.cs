@@ -48,7 +48,7 @@ namespace spyprocess
         public IEnumerable<ProcessModel> GetAllProcess()
         {
             foreach (var process in Process.GetProcesses())
-            {                
+            {
                 try
                 {
                     _process = new ProcessModel(process.ProcessName, process.StartTime);

