@@ -60,5 +60,12 @@ namespace spyprocess
                 yield return _process;
             }
         }        
+
+        public bool CheckOnNewProcess(List<ProcessModel>ListProcess)
+        {
+            if (ListProcess.Count != Process.GetProcesses().Length)
+                return true;
+            return false;
+        }
     }
 }
