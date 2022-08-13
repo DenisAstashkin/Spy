@@ -1,0 +1,27 @@
+﻿<Window x:Class="UserSpy.RequestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UserSpy"
+        mc:Ignorable="d"
+        Title="RequestWindow" MinHeight="330" MinWidth="640"
+                              MaxHeight="420" MaxWidth="750">
+    <Window.Resources>
+        <ResourceDictionary Source="StylesRequestWindow.xaml"/> 
+    </Window.Resources>
+    
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" x:Name="LablInfo" Style="{StaticResource labl}"/>
+        <TextBox Grid.Row="1" x:Name="InputInfo" Style="{StaticResource InputTxt}"/>
+        <Button Grid.Row="2" Content="Сохранить" Click="SaveButton" Style="{StaticResource BtnSave}"/>
+
+    </Grid>
+</Window>

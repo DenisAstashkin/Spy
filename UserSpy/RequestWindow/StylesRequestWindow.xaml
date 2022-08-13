@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="labl" TargetType="Label">
+        <Setter Property="FontSize" Value="25"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="InputTxt" TargetType="TextBox">
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="BtnSave" TargetType="Button">
+        <Setter Property="Margin" Value="250 10 250 10"/>
+        <Setter Property="FontSize" Value="25"/>
+    </Style>
+
+</ResourceDictionary>
