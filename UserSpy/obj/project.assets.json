@@ -15,6 +15,16 @@
           "Microsoft.WindowsDesktop.App.WPF"
         ]
       },
+      "SaveFile/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/SaveFile.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SaveFile.dll": {}
+        }
+      },
       "SpyMainWindow/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -46,6 +56,11 @@
       "path": "../KeyLogger/KeyLogger.csproj",
       "msbuildProject": "../KeyLogger/KeyLogger.csproj"
     },
+    "SaveFile/1.0.0": {
+      "type": "project",
+      "path": "../SaveFile/SaveFile.csproj",
+      "msbuildProject": "../SaveFile/SaveFile.csproj"
+    },
     "SpyMainWindow/1.0.0": {
       "type": "project",
       "path": "../SpyMainWindow/SpyMainWindow.csproj",
@@ -60,6 +75,7 @@
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
       "KeyLogger >= 1.0.0",
+      "SaveFile >= 1.0.0",
       "SpyMainWindow >= 1.0.0",
       "SpyProcess >= 1.0.0"
     ]
@@ -98,6 +114,9 @@
           "projectReferences": {
             "E:\\C#\\UserSpy\\KeyLogger\\KeyLogger.csproj": {
               "projectPath": "E:\\C#\\UserSpy\\KeyLogger\\KeyLogger.csproj"
+            },
+            "E:\\C#\\UserSpy\\SaveFile\\SaveFile.csproj": {
+              "projectPath": "E:\\C#\\UserSpy\\SaveFile\\SaveFile.csproj"
             },
             "E:\\C#\\UserSpy\\SpyMainWindow\\SpyMainWindow.csproj": {
               "projectPath": "E:\\C#\\UserSpy\\SpyMainWindow\\SpyMainWindow.csproj"

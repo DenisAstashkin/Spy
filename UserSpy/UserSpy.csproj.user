@@ -10,12 +10,24 @@
     <Compile Update="MainApp\MainApp.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="RequestWindow\RequestWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainApp\MainApp.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="MainApp\StylesMainApp.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Registration.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="RequestWindow\RequestWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="RequestWindow\StylesRequestWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="StylesRegistration.xaml">
