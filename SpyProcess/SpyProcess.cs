@@ -6,43 +6,25 @@ namespace spyprocess
     public class SpyProcess
     {
         private ProcessModel _process;
+        public string ProcessKill { get; private set; }
 
         public SpyProcess()
         {
             _process = new ProcessModel();
         }
 
-        public ProcessModel GetProcess(string ProcessName)
+        public bool KillProcess(string ProcessName)
         {
             foreach (var process in Process.GetProcesses())
             {
                 if (process.ProcessName == ProcessName)
                 {
-                    try
-                    {
-                        return new ProcessModel(process.ProcessName, process.StartTime);
-                    }
-                    catch (Exception e)
-                    {
-                        return new ProcessModel(process.ProcessName, "Нет доступа");
-                    }
+                    ProcessKill = process.ProcessName;
+                    process.Kill();
+                    return true;
                 }
             }
-            return new ProcessModel(string.Empty, null);            
-        }
-
-        public void KillProcess(string ProcessName)
-        {
-            Task.Run(() =>
-            {
-                foreach (var process in Process.GetProcesses())
-                {
-                    if (process.ProcessName == ProcessName)
-                    {
-                        process.Kill();
-                    }
-                }
-            });
+            return false;
         }
 
         public IEnumerable<ProcessModel> GetAllProcess()
@@ -59,7 +41,7 @@ namespace spyprocess
                 }
                 yield return _process;
             }
-        }        
+        }                       
 
         public bool CheckOnNewProcess(List<ProcessModel>ListProcess)
         {
