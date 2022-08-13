@@ -61,7 +61,7 @@ namespace UserSpy
             InitStyles(SP3, res);                 
         }
 
-        private void Reg(object sender, RoutedEventArgs e)
+        private void CallMainWindow(object sender, RoutedEventArgs e)
         {
             new MainApp
             {

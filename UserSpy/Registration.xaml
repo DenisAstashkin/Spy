@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UserSpy"
         mc:Ignorable="d"
-        Title="Registration" Height="550" Width="340" ResizeMode="NoResize">
+        Title="Registration" Height="550" Width="340" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <ResourceDictionary Source="StylesRegistration.xaml"/>
@@ -41,6 +41,6 @@
                  Третий режим позволяет посмотреть отчет о работе программы.
             </TextBlock>
         </StackPanel>        
-        <Button Grid.Row="3" Content="Продолжить" Click="Reg" Style="{StaticResource Btn}"/>
+        <Button Grid.Row="3" Content="Продолжить" Click="CallMainWindow" Style="{StaticResource Btn}"/>
     </Grid>
 </Window>
