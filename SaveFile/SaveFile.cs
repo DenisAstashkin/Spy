@@ -8,7 +8,7 @@ namespace savefile
         {
             try
             {
-                using (var sw = new StreamWriter(path, false, Encoding.UTF8))
+                using (var sw = new StreamWriter(path, true, Encoding.UTF8))
                 {
                     HowSaveFile(sw);
                 }
