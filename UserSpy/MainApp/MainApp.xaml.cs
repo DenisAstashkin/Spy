@@ -9,6 +9,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using savefile;
 using System.Threading;
+using System.IO;
+using Microsoft.Win32;
+using spymainwindow;
 
 namespace UserSpy
 {
@@ -21,7 +24,9 @@ namespace UserSpy
             { "KeyLogger", 0 },
             { "SpyProcess", 0 },
             { "KillProcess", 0 },
-        };           
+        };
+        private KeyLogger? logger;
+        private SpyProcess? SP;
 
         public MainApp()
         {
@@ -33,7 +38,7 @@ namespace UserSpy
 
         private void MainApp_Closed(object? sender, EventArgs e)
         {
-            MessageBox.Show("Окно закрылось");
+            
         }
 
         private void SetGridSpyControl(Grid grid, TextBox txtbox, string spyaction)
@@ -47,16 +52,16 @@ namespace UserSpy
             Grid.SetColumn(txtbox, grid.ColumnDefinitions.Count - 1);
         }
 
-        private void ShowProcess(SpyProcess SP)
+        private void ShowProcess()
         {
             Task.Run(() =>
-            {                
-                var ListProcess = new List<ProcessModel>();
+            {
+                SP.ListProcess = new List<ProcessModel>();
                 while (true)
                 {
                     try
                     {
-                        if (!SP.CheckOnNewProcess(ListProcess))
+                        if (!SP.CheckOnNewProcess(SP.ListProcess))
                         {
                             continue;
                         }
@@ -64,10 +69,10 @@ namespace UserSpy
                         {
                             (grid.Children[SpyControl["SpyProcess"]] as TextBox).Clear();
                         });
-                        ListProcess.Clear();
+                        SP.ListProcess.Clear();
                         foreach (var process in SP.GetAllProcess())
                         {
-                            ListProcess.Add(process);                            
+                            SP.ListProcess.Add(process);                            
                             Dispatcher.Invoke(() =>
                             {
                                 (grid.Children[SpyControl["SpyProcess"]] as TextBox).Text += $"[PROCESS] {process.ProcessName}    -   [TIME] {process.StartProcess}\n";
@@ -82,7 +87,7 @@ namespace UserSpy
             });
         }
 
-        private void KillProcess(string Path)
+        private void KillProcess(string Path, Action<string> action)
         {
             var ListProcess = SaveFile.Read(Path) as List<string>;
             if (ListProcess is null)
@@ -94,14 +99,7 @@ namespace UserSpy
                 {
                     foreach (var process in ListProcess)
                     {
-                        Task.Delay(50);
-                        if (SP.KillProcess(process))
-                        {
-                            Dispatcher.Invoke(() =>
-                            {
-                                (grid.Children[SpyControl["KillProcess"]] as TextBox).Text += $"{SP.ProcessKill} был закрыт\n";
-                            });
-                        }                        
+                        action(process);                      
                     }
                 }
             });
@@ -117,18 +115,19 @@ namespace UserSpy
                         if (mode.IsChecked == false)
                             continue;
                         if (mode.Content.Equals("Следить за нажатиями"))
-                        {
-                            var logger = new KeyLogger();
+                        {                            
                             SetGridSpyControl(grid, new TextBox
                             {
                                 Style = StyleTextBox
                             }, "KeyLogger");
-                            logger.KeyHook((Key key) =>
+                            logger = new KeyLogger
                             {
-                                (grid.Children[SpyControl["KeyLogger"]] as TextBox).Text += key;
-                                logger.LoggerKeys.Add(key);
-                                MessageBox.Show($"{logger.LoggerKeys[0]}");
-                            }, Dispatcher);
+                                Show = (Key key) =>
+                                {
+                                    (grid.Children[SpyControl["KeyLogger"]] as TextBox).Text += key;
+                                }
+                            };                         
+                            logger.KeyHook(Dispatcher);
                         }
                         if (mode.Content.Equals("Следить за процессами"))
                         {
@@ -136,7 +135,8 @@ namespace UserSpy
                             {
                                 Style = StyleTextBox
                             }, "SpyProcess");
-                            ShowProcess(new SpyProcess());
+                            SP = new SpyProcess();
+                            ShowProcess();
                         }
                         if (mode.Content.Equals("Закрывать ненужные процессы"))
                         {
@@ -144,14 +144,127 @@ namespace UserSpy
                             {
                                 Style = StyleTextBox
                             }, "KillProcess");
-                            var Request = new RequestWindow("Введите процессы, которые хотите закрыть");
-                            Request.ShowDialog();
-                            KillProcess(Request.Path);
+                            SP = new SpyProcess();
+                            StartKillProcess((string process) =>
+                            {
+                                Task.Delay(50);
+                                if (SP.KillProcess(process))
+                                {
+                                    Dispatcher.Invoke(() =>
+                                    {
+                                        (grid.Children[SpyControl["KillProcess"]] as TextBox).Text += $"{SP.ProcessKill} был закрыт\n";
+                                    });
+                                }
+                            });
                         }
                     }
                     break;
-
+                case '2':
+                    foreach (var mode in RegistrationWindow.SP2)
+                    {
+                        var Dialog = new SaveFileDialog
+                        {
+                            Filter = "(*.txt)|*.txt"
+                        };
+                        if (mode.IsChecked == false)
+                            continue;
+                        if (mode.Content.Equals("Статика") == true)
+                        {
+                            logger = new KeyLogger
+                            {
+                                SaveToFile = (StreamWriter sw, Key key) =>
+                                {
+                                    sw.Write($"{key} ");
+                                }
+                            };                            
+                            Dialog.ShowDialog();
+                            logger.FilePath = Dialog.FileName;       
+                            logger.KeyHook(Dispatcher);
+                            Dialog.ShowDialog();
+                            SP = new SpyProcess();
+                            SaveProcess(Dialog.FileName);
+                        }
+                        if (mode.Content.Equals("Модерация") == true)
+                        {
+                            string Word = string.Empty;
+                            var Request = new RequestWindow("Введите слова, которые хотите контралировать");
+                            Request.ShowDialog();
+                            var ListWords = SaveFile.Read(Request.Path) as List<string>;
+                            Dialog.ShowDialog();
+                            logger = new KeyLogger
+                            {
+                                Show = (Key key) =>
+                                {
+                                    Word += key;
+                                    foreach (var word in ListWords)
+                                    {
+                                        if (Word.ToLower().IndexOf(word.ToLower()) >= 0)
+                                        {
+                                            SaveFile.Save(Dialog.FileName, (StreamWriter sw) =>
+                                            {
+                                                sw.WriteLine($"Слово {word} было напечатонно пользователем");
+                                            });
+                                            Word = string.Empty;
+                                        }
+                                    }
+                                }
+                            };
+                            logger.KeyHook(Dispatcher);
+                            SP = new SpyProcess();
+                            Dialog.ShowDialog();
+                            StartKillProcess((string process) =>
+                            {
+                                if (SP.KillProcess(process))
+                                {
+                                    SaveFile.Save(Dialog.FileName, (StreamWriter sw) =>
+                                    {
+                                        sw.WriteLine($"{SP.ProcessKill} был закрыт");
+                                    });
+                                }
+                            });
+                        }
+                    }
+                    SpyMainWindow.CloseWindow(this);
+                    break;
             }
+        }     
+
+        private void StartKillProcess(Action<string> action)
+        {
+            var Request = new RequestWindow("Введите процессы, которые хотите закрыть через запятую");
+            Request.ShowDialog();
+            KillProcess(Request.Path, action);
+        }
+
+        private void SaveProcess(string path)
+        {
+            Task.Run(() =>
+            {
+                int CountScanning = 1;
+                SP.ListProcess = new List<ProcessModel>();                
+                while (true)
+                {
+                    if (!SP.CheckOnNewProcess(SP.ListProcess))
+                    {
+                        continue;
+                    }
+                    SP.ListProcess.Clear();
+                    foreach (var process in SP.GetAllProcess())
+                    {
+                        SP.ListProcess.Add(process);                        
+                    }
+                    SaveFile.Save(path, (StreamWriter sw) =>
+                    {
+                        sw.WriteLine($"Сканирование №{CountScanning}");
+                        foreach (var process in SP.ListProcess)
+                        {
+                            sw.WriteLine($"[PROCESS] {process.ProcessName}      -      [TIME] {process.StartProcess}");
+                        }
+                        sw.WriteLine();
+                    });
+                    CountScanning++;
+                }
+            });
         }
     }
 }
