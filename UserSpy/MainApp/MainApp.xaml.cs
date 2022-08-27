@@ -44,7 +44,7 @@ namespace UserSpy
         private void SetGridSpyControl(Grid grid, TextBox txtbox, string spyaction)
         {
             grid.Children.Add(txtbox);
-            if(grid.Children.Count - 1 > 1)
+            if(grid.Children.Count > 1)
             {
                 grid.ColumnDefinitions.Add(new ColumnDefinition());
             }
@@ -56,6 +56,7 @@ namespace UserSpy
         {
             Task.Run(() =>
             {
+                SP = new SpyProcess();
                 SP.ListProcess = new List<ProcessModel>();
                 while (true)
                 {
@@ -69,7 +70,8 @@ namespace UserSpy
                         {
                             (grid.Children[SpyControl["SpyProcess"]] as TextBox).Clear();
                         });
-                        SP.ListProcess.Clear();
+                        if(SP.ListProcess.Count > 0)
+                            SP.ListProcess.Clear();
                         foreach (var process in SP.GetAllProcess())
                         {
                             SP.ListProcess.Add(process);                            
@@ -146,8 +148,8 @@ namespace UserSpy
                             }, "KillProcess");
                             SP = new SpyProcess();
                             StartKillProcess((string process) =>
-                            {
-                                Task.Delay(50);
+                            {                                
+                                Thread.Sleep(70);
                                 if (SP.KillProcess(process))
                                 {
                                     Dispatcher.Invoke(() =>

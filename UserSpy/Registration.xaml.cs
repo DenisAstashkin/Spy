@@ -108,13 +108,5 @@ namespace UserSpy
                     break;
             }
         }
-
-        private void InitStyles(List<CheckBox> controls, Style style)
-        {
-            foreach (var control in controls)
-            {
-                control.Style = style;
-            }
-        }
     }
 }
