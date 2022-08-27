@@ -1,11 +1,15 @@
 ﻿using System.Diagnostics;
 using spyprocess.processmodel;
 
+
 namespace spyprocess
 {
     public class SpyProcess
     {
         private ProcessModel _process;
+
+        public List<ProcessModel>? ListProcess;
+
         public string ProcessKill { get; private set; }
 
         public SpyProcess()
