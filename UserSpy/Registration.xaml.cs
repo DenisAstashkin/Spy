@@ -23,42 +23,35 @@ namespace UserSpy
                         Content = "Закрывать ненужные процессы",                        
                     }
         };
-        public readonly List<CheckBox> SP2 = new List<CheckBox>
+        public readonly List<RadioButton> SP2 = new List<RadioButton>
         {
-            new CheckBox
+            new RadioButton
                     {                        
                         Content = "Статика",                        
                     },
-            new CheckBox
+            new RadioButton
                     {
                         Content = "Модерация",                       
                     }
         };
-        public readonly List<CheckBox> SP3 = new List<CheckBox>
-        {
-            new CheckBox
-                    {
-                        Content = "Отчёт об нажатых клавишах",                        
-                    },
-            new CheckBox
-                    {
-                        Content = "Отчёт о всех запущенных процессах",                        
-                    },
-            new CheckBox
-                    {
-                        Content = "Отчёт о работе плохих процессах",                        
-                    },
-        };
+        
         private TextBlock? TB = new TextBlock();
         public char IndexCheck { get; private set; }
         
         public Registration()
         {            
             InitializeComponent();
-            Style res = (Style)this.Resources["CheckBx"];
-            InitStyles(SP1, res);
-            InitStyles(SP2, res);
-            InitStyles(SP3, res);                 
+            Style StyleCheckBx = (Style)this.Resources["CheckBx"];
+            Style StyleRadButton = (Style)this.Resources["RadButton"];
+            foreach (var control in SP1)
+            {
+                control.Style = StyleCheckBx;
+            };
+            foreach (var control in SP2)
+            {
+                control.Style = StyleRadButton;
+                control.Margin = new Thickness(5, 0, 0, 0);
+            };
         }
 
         private void CallMainWindow(object sender, RoutedEventArgs e)
@@ -91,15 +84,7 @@ namespace UserSpy
                     {
                         SPMode2.Children.Add(checkbox);
                     }
-                    break;
-                case '3':
-                    TB = SPMode3.Children[1] as TextBlock;
-                    SPMode3.Children.RemoveAt(1);
-                    foreach(var checkbox in SP3)
-                    {
-                        SPMode3.Children.Add(checkbox);
-                    }
-                    break;
+                    break;                
             }
         }
 
