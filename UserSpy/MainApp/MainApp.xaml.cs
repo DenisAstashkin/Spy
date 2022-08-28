@@ -1,17 +1,17 @@
-﻿using keylogger;
-using spyprocess;
-using spyprocess.processmodel;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System;
 using savefile;
-using System.Threading;
 using System.IO;
-using Microsoft.Win32;
+using keylogger;
+using spyprocess;
 using spymainwindow;
+using System.Windows;
+using Microsoft.Win32;
+using System.Threading;
+using System.Windows.Input;
+using System.Threading.Tasks;
+using spyprocess.processmodel;
+using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace UserSpy
 {
@@ -32,14 +32,141 @@ namespace UserSpy
         {
             InitializeComponent();
             StyleTextBox = (Style)this.Resources["txtBox"];
-            Loaded += StartSpyProcess;
-            Closed += MainApp_Closed;
+            Loaded += StartSpyProcess;            
         }
-
-        private void MainApp_Closed(object? sender, EventArgs e)
+        private void StartSpyProcess(object? sender, EventArgs e)
         {
-            
-        }
+            switch (RegistrationWindow?.IndexCheck)
+            {
+                case '1':
+                    foreach (var mode in RegistrationWindow.SP1)
+                    {
+                        if (mode.IsChecked == false)
+                            continue;
+                        if (mode.Content.Equals("Следить за нажатиями"))
+                        {                            
+                            SetGridSpyControl(grid, new TextBox
+                            {
+                                Style = StyleTextBox
+                            }, "KeyLogger");
+                            logger = new KeyLogger
+                            {
+                                DetectKey = (Key key) =>
+                                {
+                                    (grid.Children[SpyControl["KeyLogger"]] as TextBox).Text += key;
+                                }
+                            };                         
+                            logger.KeyHook(Dispatcher);
+                        }
+                        if (mode.Content.Equals("Следить за процессами"))
+                        {
+                            SetGridSpyControl(grid, new TextBox
+                            {
+                                Style = StyleTextBox
+                            }, "SpyProcess");
+                            SP = new SpyProcess();
+                            ShowProcess();
+                        }
+                        if (mode.Content.Equals("Закрывать ненужные процессы"))
+                        {
+                            SetGridSpyControl(grid, new TextBox
+                            {
+                                Style = StyleTextBox
+                            }, "KillProcess");
+                            SP = new SpyProcess();
+                            ReactionOnKillProcess((string process) =>
+                            {                                
+                                Thread.Sleep(70);
+                                if (SP.KillProcess(process))
+                                {
+                                    Dispatcher.Invoke(() =>
+                                    {
+                                        (grid.Children[SpyControl["KillProcess"]] as TextBox).Text += $"{SP.ProcessKill} был закрыт\n";
+                                    });
+                                }
+                            });
+                        }
+                    }
+                    break;
+                case '2':
+                    foreach (var mode in RegistrationWindow.SP2)
+                    {
+                        var Dialog = new SaveFileDialog
+                        {
+                            Filter = "(*.txt)|*.txt"
+                        };
+                        if (mode.IsChecked == false)
+                            continue;
+                        if (mode.Content.Equals("Статика") == true)
+                        {
+                            Dialog.Title = "Куда будут сохраняться нажатые клавиши";
+                            Dialog.ShowDialog();
+                            var FilePath = Dialog.FileName;
+                            logger = new KeyLogger
+                            {
+                                DetectKey = (Key key) =>
+                                {
+                                    SaveFile.Save(FilePath, (StreamWriter sw) =>
+                                    {
+                                        sw.Write($"{key} ");
+                                    });
+                                }
+                            };                                                                   
+                            logger.KeyHook(Dispatcher);
+                            Dialog.Title = "Куда будут сохраняться запущенные процессы";
+                            Dialog.ShowDialog();
+                            SP = new SpyProcess();
+                            SaveProcess(Dialog.FileName);
+                        }
+                        if (mode.Content.Equals("Модерация") == true)
+                        {
+                            string Word = string.Empty;
+                            var Request = new RequestWindow("Введите слова, которые хотите контралировать");
+                            Request.TitleDialogFile = "Куда будет сохранён список слов контроля";
+                            Request.ShowDialog();
+                            var ListWords = SaveFile.Read(Request.Path) as List<string>;
+                            Dialog.Title = "Куда будет сохраняться спец. отчёт";
+                            Dialog.ShowDialog();
+                            var FilePath = Dialog.FileName;
+                            logger = new KeyLogger
+                            {
+                                DetectKey = (Key key) =>
+                                {
+                                    
+                                    Word += key;                                    
+                                    foreach (var word in ListWords)
+                                    {
+                                        if (Word.ToLower().IndexOf(word.ToLower()) >= 0)
+                                        {
+                                            SaveFile.Save(FilePath, (StreamWriter sw) =>
+                                            {
+                                                sw.WriteLine($"Слово {word} было напечатонно пользователем");
+                                            });
+                                            Word = string.Empty;
+                                        }
+                                    }
+                                }
+                        };                           
+                            logger.KeyHook(Dispatcher);
+                            SP = new SpyProcess();
+                            Dialog.Title = "Куда будет сохраняться отчёт ою закрытие процесса";
+                            Dialog.ShowDialog();
+                            ReactionOnKillProcess((string process) =>
+                            {
+                                if (SP.KillProcess(process))
+                                {
+                                    SaveFile.Save(Dialog.FileName, (StreamWriter sw) =>
+                                    {
+                                        sw.WriteLine($"{SP.ProcessKill} был закрыт");
+                                    });
+                                }
+                            });
+                        }
+                    }
+                    SpyMainWindow.CloseWindow(this);
+                    break;
+            }
+        } 
 
         private void SetGridSpyControl(Grid grid, TextBox txtbox, string spyaction)
         {
@@ -89,6 +216,14 @@ namespace UserSpy
             });
         }
 
+        private void ReactionOnKillProcess(Action<string> action)
+        {
+            var Request = new RequestWindow("Введите процессы, которые хотите закрыть через запятую");
+            Request.TitleDialogFile = "Куда будет сохранён список запрещённых процессов";
+            Request.ShowDialog();
+            KillProcess(Request.Path, action);
+        }
+
         private void KillProcess(string Path, Action<string> action)
         {
             var ListProcess = SaveFile.Read(Path) as List<string>;
@@ -96,7 +231,6 @@ namespace UserSpy
                 return;
             Task.Run(() =>
             {                
-                var SP = new SpyProcess();                
                 while (true)
                 {
                     foreach (var process in ListProcess)
@@ -105,138 +239,7 @@ namespace UserSpy
                     }
                 }
             });
-        }
-
-        private void StartSpyProcess(object? sender, EventArgs e)
-        {
-            switch (RegistrationWindow?.IndexCheck)
-            {
-                case '1':
-                    foreach (var mode in RegistrationWindow.SP1)
-                    {
-                        if (mode.IsChecked == false)
-                            continue;
-                        if (mode.Content.Equals("Следить за нажатиями"))
-                        {                            
-                            SetGridSpyControl(grid, new TextBox
-                            {
-                                Style = StyleTextBox
-                            }, "KeyLogger");
-                            logger = new KeyLogger
-                            {
-                                Show = (Key key) =>
-                                {
-                                    (grid.Children[SpyControl["KeyLogger"]] as TextBox).Text += key;
-                                }
-                            };                         
-                            logger.KeyHook(Dispatcher);
-                        }
-                        if (mode.Content.Equals("Следить за процессами"))
-                        {
-                            SetGridSpyControl(grid, new TextBox
-                            {
-                                Style = StyleTextBox
-                            }, "SpyProcess");
-                            SP = new SpyProcess();
-                            ShowProcess();
-                        }
-                        if (mode.Content.Equals("Закрывать ненужные процессы"))
-                        {
-                            SetGridSpyControl(grid, new TextBox
-                            {
-                                Style = StyleTextBox
-                            }, "KillProcess");
-                            SP = new SpyProcess();
-                            StartKillProcess((string process) =>
-                            {                                
-                                Thread.Sleep(70);
-                                if (SP.KillProcess(process))
-                                {
-                                    Dispatcher.Invoke(() =>
-                                    {
-                                        (grid.Children[SpyControl["KillProcess"]] as TextBox).Text += $"{SP.ProcessKill} был закрыт\n";
-                                    });
-                                }
-                            });
-                        }
-                    }
-                    break;
-                case '2':
-                    foreach (var mode in RegistrationWindow.SP2)
-                    {
-                        var Dialog = new SaveFileDialog
-                        {
-                            Filter = "(*.txt)|*.txt"
-                        };
-                        if (mode.IsChecked == false)
-                            continue;
-                        if (mode.Content.Equals("Статика") == true)
-                        {
-                            logger = new KeyLogger
-                            {
-                                SaveToFile = (StreamWriter sw, Key key) =>
-                                {
-                                    sw.Write($"{key} ");
-                                }
-                            };                            
-                            Dialog.ShowDialog();
-                            logger.FilePath = Dialog.FileName;       
-                            logger.KeyHook(Dispatcher);
-                            Dialog.ShowDialog();
-                            SP = new SpyProcess();
-                            SaveProcess(Dialog.FileName);
-                        }
-                        if (mode.Content.Equals("Модерация") == true)
-                        {
-                            string Word = string.Empty;
-                            var Request = new RequestWindow("Введите слова, которые хотите контралировать");
-                            Request.ShowDialog();
-                            var ListWords = SaveFile.Read(Request.Path) as List<string>;
-                            Dialog.ShowDialog();
-                            logger = new KeyLogger
-                            {
-                                Show = (Key key) =>
-                                {
-                                    Word += key;
-                                    foreach (var word in ListWords)
-                                    {
-                                        if (Word.ToLower().IndexOf(word.ToLower()) >= 0)
-                                        {
-                                            SaveFile.Save(Dialog.FileName, (StreamWriter sw) =>
-                                            {
-                                                sw.WriteLine($"Слово {word} было напечатонно пользователем");
-                                            });
-                                            Word = string.Empty;
-                                        }
-                                    }
-                                }
-                            };
-                            logger.KeyHook(Dispatcher);
-                            SP = new SpyProcess();
-                            Dialog.ShowDialog();
-                            StartKillProcess((string process) =>
-                            {
-                                if (SP.KillProcess(process))
-                                {
-                                    SaveFile.Save(Dialog.FileName, (StreamWriter sw) =>
-                                    {
-                                        sw.WriteLine($"{SP.ProcessKill} был закрыт");
-                                    });
-                                }
-                            });
-                        }
-                    }
-                    SpyMainWindow.CloseWindow(this);
-                    break;
-            }
-        }     
-
-        private void StartKillProcess(Action<string> action)
-        {
-            var Request = new RequestWindow("Введите процессы, которые хотите закрыть через запятую");
-            Request.ShowDialog();
-            KillProcess(Request.Path, action);
-        }
+        }                    
 
         private void SaveProcess(string path)
         {
@@ -267,6 +270,6 @@ namespace UserSpy
                     CountScanning++;
                 }
             });
-        }
+        }        
     }
 }

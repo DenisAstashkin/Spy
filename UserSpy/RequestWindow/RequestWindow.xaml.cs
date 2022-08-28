@@ -9,6 +9,8 @@ namespace UserSpy
     public partial class RequestWindow : Window
     {        
         public string Path { get; private set; }       
+
+        public string? TitleDialogFile { get; set; }
         
         public RequestWindow(string Title)
         {            
@@ -31,7 +33,8 @@ namespace UserSpy
             {
                 var Dialog = new SaveFileDialog
                 {
-                    Filter = "(*.txt)|*.txt"
+                    Filter = "(*.txt)|*.txt",
+                    Title = TitleDialogFile
                 };
                 Dialog.ShowDialog();
                 Path = Dialog.FileName;

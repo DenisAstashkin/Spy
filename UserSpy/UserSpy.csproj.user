@@ -21,7 +21,7 @@
     <Page Update="MainApp\StylesMainApp.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Registration.xaml">
+    <Page Update="RegistrationWindow\Registration.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="RequestWindow\RequestWindow.xaml">
@@ -30,7 +30,7 @@
     <Page Update="RequestWindow\StylesRequestWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="StylesRegistration.xaml">
+    <Page Update="RegistrationWindow\StylesRegistration.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

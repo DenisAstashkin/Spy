@@ -15,6 +15,7 @@ namespace spyprocess
         public SpyProcess()
         {
             _process = new ProcessModel();
+            ListProcess = null;
         }
 
         public bool KillProcess(string ProcessName)

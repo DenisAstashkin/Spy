@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 E:\C#\UserSpy\UserSpy\App.xaml
-6-746513139
+6342825360
 
-735652399
+7-1565509497
 19819078301
-MainApp\MainApp.xaml;MainApp\StylesMainApp.xaml;Registration.xaml;RequestWindow\RequestWindow.xaml;RequestWindow\StylesRequestWindow.xaml;StylesRegistration.xaml;
+MainApp\MainApp.xaml;MainApp\StylesMainApp.xaml;RegistrationWindow\Registration.xaml;RegistrationWindow\StylesRegistration.xaml;RequestWindow\RequestWindow.xaml;RequestWindow\StylesRequestWindow.xaml;
 
 True
 
