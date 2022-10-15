@@ -4,10 +4,11 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
+    <UseWPF>true</UseWPF>	  
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HtmlReport\HtmlReport.csproj" />
     <ProjectReference Include="..\KeyLogger\KeyLogger.csproj" />
     <ProjectReference Include="..\SaveFile\SaveFile.csproj" />
     <ProjectReference Include="..\SpyMainWindow\SpyMainWindow.csproj" />

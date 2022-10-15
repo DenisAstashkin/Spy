@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using spyprocess.processmodel;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using HtmlReport;
 
 namespace UserSpy
 {
@@ -30,12 +31,14 @@ namespace UserSpy
 
         public MainApp()
         {
-            InitializeComponent();
+            InitializeComponent();            
             StyleTextBox = (Style)this.Resources["txtBox"];
             Loaded += StartSpyProcess;            
         }
+         
+
         private void StartSpyProcess(object? sender, EventArgs e)
-        {
+        {            
             switch (RegistrationWindow?.IndexCheck)
             {
                 case '1':
@@ -162,11 +165,33 @@ namespace UserSpy
                                 }
                             });
                         }
-                    }
+                    }                    
                     SpyMainWindow.CloseWindow(this);
                     break;
+                case '3':
+                    var DialogShow = new OpenFileDialog
+                    {
+                        Title = "Введите файл куда записаны были процессы"
+                    };
+                    DialogShow.ShowDialog();
+                    List<string>? Process = SaveFile.Read(DialogShow.FileName) as List<string>;
+                    DialogShow.Title = "Введите файл куда сохранялись нажатия";
+                    DialogShow.ShowDialog();
+                    List<string>? Keys = SaveFile.Read(DialogShow.FileName) as List<string>;
+                    var SaveDialog = new SaveFileDialog
+                    {
+                        Title = "Введите куда вы хотите сохранить отчёт",
+                        Filter = "(*.html)|*.html"
+                    };
+                    SaveDialog.ShowDialog();
+                    if(HTMLSave.SaveInHTMLFile(Process, Keys, SaveDialog.FileName))
+                    {
+                        MessageBox.Show("Отчёт успешно создан!");
+                        Close();
+                    }
+                    break;
             }
-        } 
+        }         
 
         private void SetGridSpyControl(Grid grid, TextBox txtbox, string spyaction)
         {

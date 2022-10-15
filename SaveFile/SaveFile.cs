@@ -24,14 +24,13 @@ namespace savefile
         {
             var listprocess = new List<string>();
             try
-            {
-                
+            {                
                 using (var sr = new StreamReader(path))
                 {
-                    string? process;
-                    while ((process = sr.ReadLine()) != null)
+                    string? info;
+                    while ((info = sr.ReadLine()) != null)
                     {
-                        listprocess.Add(process);
+                        listprocess.Add(info);
                     }
                 }
             }

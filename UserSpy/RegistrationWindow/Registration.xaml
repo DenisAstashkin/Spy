@@ -35,8 +35,8 @@
             </TextBlock>
         </StackPanel>
         <StackPanel x:Name="SPMode3" Grid.Row="2">
-            <CheckBox Content="Режим №3" Style="{StaticResource CheckBx}"
-                      Margin="3 0 0 0"/>
+            <RadioButton GroupName="Modes" Content="Режим №3" Style="{StaticResource RadButton}"
+                         Checked="RadioButton_Checked" Unchecked="RadioButton_Unchecked"/>
             <TextBlock Style="{StaticResource TxtBlock}">
                  Третий режим позволяет посмотреть отчет о работе программы.
             </TextBlock>

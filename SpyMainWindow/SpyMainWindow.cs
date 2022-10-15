@@ -17,18 +17,5 @@ namespace spymainwindow
                 return false;
             }
         }
-
-        public static bool ShowWindow(Window window)
-        {
-            try
-            {
-                window.Show();
-                return true;
-            }
-            catch(Exception e)
-            {
-                return false;
-            }
-        }
     }
 }
